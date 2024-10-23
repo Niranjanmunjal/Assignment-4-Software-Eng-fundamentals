@@ -138,5 +138,28 @@ public class Prescription{
         return false;
     }
     }
-    
+
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner userInput = new Scanner(System.in);
+        Prescription prescription = new Prescription();
+
+        if (prescription.addPrescription(userInput)) {
+            System.out.println("Prescription added successfully.");
+
+            // Add remarks until user cancels
+            while (true) {
+                if (!prescription.addRemark(userInput)) {
+                    System.out.println("Remark not added.");
+                    break; // Exit the loop if remark is not added
+                }
+                System.out.println("Remark added successfully.");
+            }
+        } else {
+            System.out.println("Prescription not added.");
+        }
+
+        userInput.close();
+    }
 }
