@@ -83,13 +83,60 @@ public class Prescription{
     }
 
     
-    public boolean addRemark()
+    public boolean addRemark(Scanner userInput) throws IOException
     {
         //TODO Add the prescription's remark to a TXT file
         //IF the remark meets the given Conditions,
         //the information should be added to a txt File(e.g., remark.txt), and the function should return true
         //If the remark does not meetthe given conditions,
         //the information should not be added to the TXT file,and the function should retuen false
-        return true;
+
+        if (postRemarks.size() >= 2) {
+        System.out.println("Remark limit reached. Cannot add more remarks.");
+        return false;
+        }
+
+        System.out.println("Enter remark (6-20 words, starting with uppercase): ");
+        String remark = userInput.nextLine();
+
+        String[] remarkWords = remark.split("\\s+");
+        if (remarkWords.length < 6 || remarkWords.length > 20 || !Character.isUpperCase(remarkWords[0].charAt(0))) {
+        System.out.println("Invalid remark. Please enter between 6 and 20 words, starting with an uppercase letter.");
+        return false;
+        }
+        System.out.println("Choose remark type (Client or Optometrist): ");
+        String remarkType = userInput.nextLine();
+        if (!isValidRemarkType(remarkType)) {
+        System.out.println("Invalid remark type. Please enter 'Client' or 'Optometrist'.");
+        return false;
+        }
+        
+        // Add remark to list
+        postRemarks.add(remarkType + ": " + remark);
+
+        // Write remark to file
+        return writeRemarkToFile();
     }
+    private boolean isValidRemarkType(String remarkType) {
+    for (String type : remarkTypes) {
+        if (type.equalsIgnoreCase(remarkType)) {
+            return true;
+        }
+    }
+    return false;
+    }
+
+    private boolean writeRemarkToFile() throws IOException {
+    try (FileWriter writer = new FileWriter("remark.txt", true)) {
+        for (String remark : postRemarks) {
+            writer.write(remark + "\n");
+        }
+        return true;
+    } 
+    catch (IOException e) {
+        e.printStackTrace();
+        return false;
+    }
+    }
+    
 }
