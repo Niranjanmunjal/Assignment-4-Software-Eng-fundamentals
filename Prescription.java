@@ -1,9 +1,9 @@
-import java.util.ArrayList;
-import java.util.Date;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
-public class Prescription{
+public class      Prescription{
     private int prescID;
     private String firstName;
     private String lastName;
@@ -20,7 +20,7 @@ public class Prescription{
     {
         //TODO Add the prescription's information to a TXT file
         //If the prescription meets the given conditions,
-        , // the information should be added to a TXT file (e.g., presc.txt), and the funtion should return true
+        // the information should be added to a TXT file (e.g., presc.txt), and the funtion should return true
         //If the prescription's Information does not meet the given conditions,
           // the information should not be added to the TXT file, and the function should return false
           System.out.println("Enter first Name (4-15 Characters): ");
@@ -80,6 +80,7 @@ public class Prescription{
         try (FileWriter writer = new FileWriter("presc.txt", true)) {
             writer.write(String.format("%d\n", prescID++));
         }
+        return true;
     }
 
     
@@ -118,7 +119,7 @@ public class Prescription{
         return writeRemarkToFile();
     }
     private boolean isValidRemarkType(String remarkType) {
-    for (String type : remarkTypes) {
+    for (String type : remarktypes) {
         if (type.equalsIgnoreCase(remarkType)) {
             return true;
         }
@@ -138,10 +139,8 @@ public class Prescription{
         return false;
     }
     }
-
-}
-public class Main {
-    public static void main(String[] args) {
+public class main {
+    public static void main(String[] args) throws IOException {
         Scanner userInput = new Scanner(System.in);
         Prescription prescription = new Prescription();
 
@@ -162,4 +161,6 @@ public class Main {
 
         userInput.close();
     }
+}
+
 }
